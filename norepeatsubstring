@@ -11,3 +11,21 @@
 2. 对弈最长子串出现在字符串的末尾的情况 "bbbbcdfge"，这种因为最后的字符都没有出现过，如果使用-1为初始值会出问题，这里仍然需要和上一次的左边界进行比较。
 其实关键的就是判断当前的左边界到底在什么位置。
 
+```
+int lengthOfLongestSubstring(string s) {
+        map<char, int> pos;
+        int left = -1;
+        int ans = 0;
+        for (int i = 0; i < s.size(); ++i) {
+            auto it = pos.find(s[i]);
+            int tmp=-1;
+            if (it != pos.end()) {
+                tmp = it->second;
+            }
+            left = max(left, tmp);
+            ans = max(ans, i - left);
+            pos[s[i]] = i;
+        }
+        return ans;
+    }
+```
